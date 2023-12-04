@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useNavbar } from "./useNavbar";
 import { useNavigate } from "react-router-dom";
 import PokmonLogo from "@/assets/images/pokemonLogo.png";
-import ProfileIcon from "@/assets/icons/profile.svg";
+import avatarAsh from '@/assets/images/ash.webp'
 
 const MENU = [
   {
@@ -10,7 +10,7 @@ const MENU = [
     label: "Dashboard",
   },
   {
-    path: "/profile",
+    path: "/dashboard/profile",
     label: "Mi perfil",
   },
   {
@@ -33,16 +33,16 @@ const Navbar: React.FC = (): JSX.Element => {
   }, [handleClickOutside]);
 
   return (
-    <div className="flex justify-between px-10 items-center">
-      <img src={PokmonLogo} alt="logo" width={200} height={100} />
+    <div className="flex justify-between px-28 items-center pt-5">
+      <img src={PokmonLogo} alt="logo" width={180} height={10} />
 
       <img
         ref={profileRef}
-        src={ProfileIcon}
+        src={avatarAsh}
         alt="logo"
         width={80}
         height={100}
-        className="cursor-pointer"
+        className="cursor-pointer border p-3 rounded-full border-slate-600"
         onClick={() => setView(!view)}
       />
 

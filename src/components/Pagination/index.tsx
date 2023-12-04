@@ -5,6 +5,7 @@ type PaginationPropsType = {
   nextPage: () => void;
   backPage: () => void;
 };
+// ... (resto del código del componente Pagination)
 
 const Pagination = ({
   totalPages,
@@ -15,14 +16,22 @@ const Pagination = ({
 }: PaginationPropsType) => {
   const renderPageButtons = () => {
     const buttons = [];
+    let startPage = 1;
 
-    for (let i = 1; i <= totalPages; i++) {
+    // Calcula la página inicial para mostrar
+    if (currentPage > 10) {
+      startPage = Math.floor((currentPage - 1) / 10) * 10 + 1;
+    }
+
+    // Calcula la página final para mostrar
+    let endPage = Math.min(startPage + 9, totalPages);
+
+    for (let i = startPage; i <= endPage; i++) {
       buttons.push(
         <input
           key={i}
-          className={`join-item btn btn-square ${
-            currentPage === i ? "checked" : ""
-          }`}
+          className={`join-item btn btn-square ${currentPage === i ? "checked" : ""
+            }`}
           type="radio"
           name="options"
           aria-label={i.toString()}
@@ -49,3 +58,4 @@ const Pagination = ({
 };
 
 export default Pagination;
+

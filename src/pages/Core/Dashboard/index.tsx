@@ -1,93 +1,32 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Card, Pagination } from "@/components";
+import { IPokemon } from '@/interfaces'
+import { useDashboard } from "./useDashboard";
 
-interface Pokemon {
-  name: string;
-  url: string;
-  abilities: { name: string }[];
-  sprites: { front_default: string };
-}
+export const Dashboard: React.FC = (): JSX.Element => {
 
-const ITEMS_PER_PAGE = 10;
+  const {
+    fetchData,
+    selectedPokemon,
+    backPage,
+    nextPage,
+    handlePageChange,
+    pokemonWithImages,
+    pokemonSelected,
+    currentPage,
+    totalPage
+  } = useDashboard()
 
-export const Dashboard: React.FC = () => {
-  const [pokemonWithImages, setPokemonWithImages] = useState<Pokemon[]>([]);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [pokemonSelected, setPokemonSelected] = useState<Pokemon>();
-
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
-
-  const nextPage = () => {
-    if (currentPage === ITEMS_PER_PAGE) {
-      return;
-    }
-    setCurrentPage(currentPage + 1);
-  };
-
-  const backPage = () => {
-    if (currentPage === 1) {
-      return;
-    }
-    setCurrentPage(currentPage - 1);
-  };
-
-  const selectedPokemon = (pokemon: Pokemon) => {
-    setPokemonSelected(pokemon);
-    const modal = document.getElementById(
-      "my_modal_3"
-    ) as HTMLDialogElement | null;
-    if (modal) {
-      modal.showModal();
-    }
-  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      // Simulating fetching data from an API
-      try {
-        // Assuming getPokemon and getPokemonById are mock functions for fetching data
-        const data: Pokemon[] = await getPokemon(
-          ITEMS_PER_PAGE,
-          (currentPage - 1) * ITEMS_PER_PAGE
-        );
-
-        const pokemonDetail: Pokemon[] = await Promise.all(
-          data.map(async (element: Pokemon) => {
-            const pokemonDetail = await getPokemonById(element.url);
-            const pokemonAbilities = pokemonDetail.abilities.map(
-              (element: any) => {
-                return element.ability;
-              }
-            );
-
-            return {
-              name: element.name,
-              sprites: pokemonDetail.sprites,
-              abilities: pokemonAbilities,
-            } as Pokemon;
-          })
-        );
-
-        setPokemonWithImages(pokemonDetail);
-      } catch (error) {
-        // Handle error
-        console.error("Error fetching data:", error);
-      }
-    };
-
     fetchData();
-  }, [currentPage]); // Run this effect whenever currentPage changes
+  }, [currentPage]);
 
-  useEffect(() => {
-    console.log(pokemonSelected, "Selected Pokemon"); // Este console.log se ejecutará cada vez que pokemonSelected cambie
-  }, [pokemonSelected]);
 
   return (
-    <div>
+    <>
       <div className="flex flex-wrap justify-between px-16 pb-16">
-        {pokemonWithImages.map((element: Pokemon, index: number) => (
+        {pokemonWithImages.map((element: IPokemon, index: number) => (
           <div onClick={() => selectedPokemon(element)} key={index}>
             <Card
               name={element.name}
@@ -105,7 +44,7 @@ export const Dashboard: React.FC = () => {
 
       <div className="w-full flex justify-center">
         <Pagination
-          totalPages={ITEMS_PER_PAGE}
+          totalPages={totalPage}
           currentPage={currentPage}
           onPageChange={handlePageChange}
           nextPage={nextPage}
@@ -140,26 +79,8 @@ export const Dashboard: React.FC = () => {
           </div>
         </div>
       </dialog>
-    </div>
+    </>
   );
 };
 
 // Mock functions for fetching data
-const getPokemon = async (
-  limit: number,
-  offset: number
-): Promise<Pokemon[]> => {
-  // Simulated data fetching logic, replace with actual API calls
-  const response = await fetch(
-    `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`
-  );
-  const data = await response.json();
-  return data.results;
-};
-
-const getPokemonById = async (url: string): Promise<any> => {
-  // Simulated data fetching logic, replace with actual API calls
-  const response = await fetch(url);
-  const data = await response.json();
-  return data;
-};
