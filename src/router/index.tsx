@@ -17,13 +17,12 @@ import { Profile } from "@/pages/Core/Profile";
 import { toast } from "react-toastify";
 
 const isUserAuthenticated = () => {
-  const sessionToken = sessionStorage.getItem("token");
   const localToken = localStorage.getItem("token");
 
-  if (!!sessionToken || !!localToken) {
+  if (!!localToken) {
     toast.error("Usuario no autenticado");
   }
-  return true;
+  return !!localToken;
 };
 
 const routes: RouteObject[] = createRoutesFromElements(

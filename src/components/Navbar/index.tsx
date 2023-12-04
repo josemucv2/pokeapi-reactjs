@@ -2,24 +2,27 @@ import { useEffect } from "react";
 import { useNavbar } from "./useNavbar";
 import { useNavigate } from "react-router-dom";
 import PokmonLogo from "@/assets/images/pokemonLogo.png";
-import avatarAsh from '@/assets/images/ash.webp'
+import avatarAsh from '@/assets/images/ash.webp';
 
 const MENU = [
   {
     path: "/dashboard",
     label: "Dashboard",
+    logout: false,
   },
   {
     path: "/dashboard/profile",
     label: "Mi perfil",
+    logout: false,
   },
   {
     path: "/login",
-    label: "Cerrar Sesion",
+    label: "Cerrar Sesión",
+    logout: true,
   },
 ];
 
-const Navbar: React.FC = (): JSX.Element => {
+const Navbar = () => {
   const goPage = useNavigate();
 
   const { handleClickOutside, setView, view, menuRef, profileRef } =
@@ -31,6 +34,16 @@ const Navbar: React.FC = (): JSX.Element => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [handleClickOutside]);
+
+  const handleMenuClick = (path: string, isLogout: boolean) => {
+    if (isLogout) {
+      // Limpiar el localStorage al cerrar sesión
+      localStorage.removeItem('token'); // Elimina el token u otros datos de autenticación
+      goPage("/login"); // Redirige a la página de login o a donde desees después del cierre de sesión
+    } else {
+      goPage(path);
+    }
+  };
 
   return (
     <div className="flex justify-between px-28 items-center pt-5">
@@ -56,7 +69,7 @@ const Navbar: React.FC = (): JSX.Element => {
               <div
                 key={index}
                 className="text-black text-xl hover:underline hover:text-blue-800 cursor-pointer"
-                onClick={() => goPage(element.path)}
+                onClick={() => handleMenuClick(element.path, element.logout)}
               >
                 {element.label}
               </div>

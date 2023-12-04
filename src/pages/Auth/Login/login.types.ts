@@ -1,4 +1,6 @@
 import { ChangeEvent } from "react";
+import { IUser } from "@/interfaces";
+
 
 /**
  * Object representing form data.
@@ -6,10 +8,7 @@ import { ChangeEvent } from "react";
  * @param {string} email - User's email address.
  * @param {string} password - User's password.
  */
-export type formDataType = {
-  email: string;
-  password: string;
-};
+export type formDataType = Pick<IUser, 'email'> & Pick<IUser, 'password'>;
 
 /**
  * Return type for useLogin hook.
