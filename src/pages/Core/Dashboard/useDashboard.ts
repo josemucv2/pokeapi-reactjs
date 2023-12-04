@@ -2,6 +2,7 @@ import { useState } from "react";
 import { IPokemon, IHabilities } from "@/interfaces";
 import { getPokemon, getPokemonById } from "@/services";
 import { ReturnDashboardType } from './dashboard.types'
+import { toast } from 'react-toastify'
 
 
 
@@ -68,8 +69,7 @@ export const useDashboard = (): ReturnDashboardType => {
 
             setPokemonWithImages(pokemonDetail);
         } catch (error) {
-            // Handle error
-            console.error("Error fetching data:", error);
+            toast.error(`${error}`)
         }
     };
 
