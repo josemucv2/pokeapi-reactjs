@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Card, Pagination } from "@/components";
-import { Pokemon } from '@/interfaces'
-import { useDashboard, limit } from "./useDashboard";
+import { IPokemon } from '@/interfaces'
+import { useDashboard } from "./useDashboard";
 
 export const Dashboard: React.FC = (): JSX.Element => {
 
@@ -26,7 +26,7 @@ export const Dashboard: React.FC = (): JSX.Element => {
   return (
     <>
       <div className="flex flex-wrap justify-between px-16 pb-16">
-        {pokemonWithImages.map((element: Pokemon, index: number) => (
+        {pokemonWithImages.map((element: IPokemon, index: number) => (
           <div onClick={() => selectedPokemon(element)} key={index}>
             <Card
               name={element.name}

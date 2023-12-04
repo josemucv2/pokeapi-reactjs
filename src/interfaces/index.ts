@@ -1,6 +1,11 @@
-export interface Pokemon {
+export interface IPokemon {
     name: string;
     url: string;
-    abilities: { name: string }[];
+    abilities: IHabilities[];
     sprites: { front_default: string };
+}
+
+export interface IHabilities {
+    ability: []
+    name: string,
 }

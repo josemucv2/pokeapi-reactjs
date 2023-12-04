@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Pokemon } from "@/interfaces";
+import { IPokemon, IHabilities } from "@/interfaces";
 import { getPokemon, getPokemonById } from "@/services";
 import { ReturnDashboardType } from './dashboard.types'
 
@@ -8,9 +8,9 @@ import { ReturnDashboardType } from './dashboard.types'
 export const limit = 10
 export const useDashboard = (): ReturnDashboardType => {
 
-    const [pokemonWithImages, setPokemonWithImages] = useState<Pokemon[]>([]);
+    const [pokemonWithImages, setPokemonWithImages] = useState<IPokemon[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const [pokemonSelected, setPokemonSelected] = useState<Pokemon>();
+    const [pokemonSelected, setPokemonSelected] = useState<IPokemon>();
     const [totalPage, setTotalPage] = useState<number>(10)
 
     const handlePageChange = (page: number) => {
@@ -28,7 +28,7 @@ export const useDashboard = (): ReturnDashboardType => {
         setCurrentPage(currentPage - 1);
     };
 
-    const selectedPokemon = (pokemon: Pokemon) => {
+    const selectedPokemon = (pokemon: IPokemon) => {
         setPokemonSelected(pokemon);
         const modal = document.getElementById(
             "my_modal_3"
@@ -52,8 +52,8 @@ export const useDashboard = (): ReturnDashboardType => {
             const pokemonDetail = await Promise.all(
                 data.results.map(async (element) => {
                     const pokemonDetail = await getPokemonById(element.url);
-                    const pokemonAbilities = pokemonDetail.abilities.map(
-                        (element) => {
+                    const pokemonAbilities: IHabilities[] = pokemonDetail.abilities.map(
+                        (element: IHabilities) => {
                             return element.ability;
                         }
                     );
@@ -62,7 +62,7 @@ export const useDashboard = (): ReturnDashboardType => {
                         name: element.name,
                         sprites: pokemonDetail.sprites,
                         abilities: pokemonAbilities,
-                    } as Pokemon;
+                    } as IPokemon;
                 })
             );
 

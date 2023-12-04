@@ -1,20 +1,15 @@
 import axios, { AxiosResponse } from 'axios';
-import { Pokemon } from '@/interfaces';
+import { IPokemon } from '@/interfaces';
 
-export interface ApiResponse {
-    next: string | null;
-    previous: string | null;
-}
 
 export type CustomResponse<T> = AxiosResponse & {
-    data: T
     count: number,
-    results: Pokemon[]
+    results: T[]
 }
 
-export const getPokemon = async (limit: number, offset: number): Promise<CustomResponse<Pokemon>> => {
+export const getPokemon = async (limit: number, offset: number): Promise<CustomResponse<IPokemon>> => {
     try {
-        const response = await axios.get<CustomResponse<ApiResponse>>(`${import.meta.env.VITE_BASE_URL}?limit=${limit}&offset=${offset}`);
+        const response = await axios.get<CustomResponse<IPokemon>>(`${import.meta.env.VITE_BASE_URL}?limit=${limit}&offset=${offset}`);
         return response.data;
     } catch (error) {
         throw new Error('No se pudo obtener la lista de Pokémon');
