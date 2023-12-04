@@ -10,7 +10,7 @@ const MENU = [
     label: "Dashboard",
   },
   {
-    path: "/profile",
+    path: "/dashboard/profile",
     label: "Mi perfil",
   },
   {
