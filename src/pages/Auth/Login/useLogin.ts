@@ -3,6 +3,8 @@ import { formDataType, useLoginReturnType } from './login.types'
 import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
 import { loginServices } from "@/services";
+import { validateEmail, validateRequired, validateSpaceString } from '@/utils/validation'
+import { isUserAuthenticated } from '@/router'
 
 export const useLogin = (): useLoginReturnType => {
 
@@ -13,6 +15,36 @@ export const useLogin = (): useLoginReturnType => {
         email: "",
         password: "",
     });
+
+    const [errorData, setErrorData] = useState<formDataType>({
+        email: '',
+        password: ""
+    })
+
+    const _validateLoginFields = () => {
+
+        const { email, password } = formData;
+
+        const emailError = validateSpaceString(email) || validateEmail(email)
+
+        const passwordError = validateRequired(password)
+
+        return {
+            emailError: emailError,
+            passwordError: passwordError,
+        };
+
+    }
+
+    const _setErrors = (value: formDataType): void => {
+
+        setErrorData((prevValues) => ({
+            ...prevValues,
+            email: value.email,
+            password: value.password,
+        }));
+
+    };
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
 
@@ -25,17 +57,34 @@ export const useLogin = (): useLoginReturnType => {
     };
 
     const login = async (): Promise<void> => {
-        setLoading(true);
+        const { emailError, passwordError } = _validateLoginFields();
 
-        try {
-            await loginServices(formData);
-            goPage('/dashboard');
-        } catch (err: unknown) {
-            console.log(err,'laknsdlnad')
-            toast.error(err);
-        } finally {
-            setLoading(false);
+        if (!(emailError || passwordError)) {
+            setLoading(true);
+            console.log('PASA PRIMERO UUSE LOGINE')
+            try {
+                const result = await loginServices(formData);
+
+
+                localStorage.setItem('token', result.token);
+                localStorage.setItem('user', JSON.stringify(result.user));
+
+                goPage('/dashboard');
+            } catch (err) {
+                if (err instanceof Error) {
+                    toast.error(err.message)
+                } else if (typeof err === 'string') {
+                    toast.error(err);
+                }
+            } finally {
+                setLoading(false);
+            }
         }
+
+        _setErrors({
+            email: emailError,
+            password: passwordError,
+        });
     };
 
 
@@ -45,5 +94,6 @@ export const useLogin = (): useLoginReturnType => {
         login,
         formData,
         loading,
+        errorData
     }
 }

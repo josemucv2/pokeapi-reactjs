@@ -2,9 +2,7 @@ import { useEffect } from "react";
 import { useNavbar } from "./useNavbar";
 import { useNavigate } from "react-router-dom";
 import PokmonLogo from "@/assets/images/pokemonLogo.png";
-import avatarAsh from "@/assets/images/ash.webp";
-import misty from "@/assets/images/misty.png";
-import brock from "@/assets/images/brock.jpeg";
+import { useUser } from "@/context/userContext";
 
 const MENU = [
   {
@@ -27,6 +25,8 @@ const MENU = [
 const Navbar: React.FC = (): JSX.Element => {
   const goPage = useNavigate();
 
+  const user = useUser()
+
   const { handleClickOutside, setView, view, menuRef, profileRef } =
     useNavbar();
 
@@ -39,9 +39,11 @@ const Navbar: React.FC = (): JSX.Element => {
 
   const handleMenuClick = (path: string, isLogout: boolean) => {
     if (isLogout) {
-      // Limpiar el localStorage al cerrar sesión
-      localStorage.removeItem("token"); // Elimina el token u otros datos de autenticación
-      goPage("/login"); // Redirige a la página de login o a donde desees después del cierre de sesión
+      localStorage.removeItem("token")
+      localStorage.removeItem("user");
+
+      console.log('al final pasa por aqui septimo', localStorage.getItem('user'), localStorage.getItem('token'))
+      goPage("/login");
     } else {
       goPage(path);
     }
@@ -53,7 +55,7 @@ const Navbar: React.FC = (): JSX.Element => {
 
       <img
         ref={profileRef}
-        src={misty}
+        src={user.avatar}
         alt="logo"
         width={80}
         height={80}

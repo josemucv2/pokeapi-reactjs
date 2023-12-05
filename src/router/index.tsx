@@ -15,7 +15,11 @@ import { Welcome } from "@/pages/Auth/Welcome";
 import { Dashboard } from "@/pages/Core/Dashboard";
 import { Profile } from "@/pages/Core/Profile";
 
-const isUserAuthenticated = () => !!localStorage.getItem("token");
+export const isUserAuthenticated = () => {
+  console.log('aqui ya deberia de tener el token,', localStorage.getItem('token'))
+  return !!localStorage.getItem("token")
+}
+
 const routes: RouteObject[] = createRoutesFromElements(
   <>
     <Route path="/" element={<Auth />}>

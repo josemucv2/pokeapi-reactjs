@@ -23,4 +23,5 @@ export type useLoginReturnType = {
   login: () => void;
   formData: formDataType;
   loading: boolean;
+  errorData: formDataType
 };

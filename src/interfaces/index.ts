@@ -11,8 +11,14 @@ export interface IHabilities {
 }
 
 export interface IUser {
+    id?: number,
     email: string,
     password: string,
     avatar?: string,
     name?: string,
+    lastName?: string,
+    pokemonCount?: number,
+    battlesWon?: number,
+    battlesLost?: number,
+    mainPokemon?: string
 }
