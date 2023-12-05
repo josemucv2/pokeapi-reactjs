@@ -30,8 +30,9 @@ export const useLogin = (): useLoginReturnType => {
         try {
             await loginServices(formData);
             goPage('/dashboard');
-        } catch (err) {
-            toast.error(`${err}`);
+        } catch (err: unknown) {
+            console.log(err,'laknsdlnad')
+            toast.error(err);
         } finally {
             setLoading(false);
         }

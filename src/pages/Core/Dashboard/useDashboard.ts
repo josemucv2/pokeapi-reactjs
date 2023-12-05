@@ -13,6 +13,7 @@ export const useDashboard = (): ReturnDashboardType => {
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [pokemonSelected, setPokemonSelected] = useState<IPokemon>();
     const [totalPage, setTotalPage] = useState<number>(10)
+    const [loading, setLoading] = useState<boolean>(false)
 
     const handlePageChange = (page: number) => {
         setCurrentPage(page);
@@ -41,6 +42,7 @@ export const useDashboard = (): ReturnDashboardType => {
 
     const fetchData = async () => {
         try {
+            setLoading(true)
             const data = await getPokemon(
                 limit,
                 (currentPage - 1) * limit
@@ -68,6 +70,7 @@ export const useDashboard = (): ReturnDashboardType => {
             );
 
             setPokemonWithImages(pokemonDetail);
+            setLoading(false)
         } catch (error) {
             toast.error(`${error}`)
         }
@@ -83,6 +86,7 @@ export const useDashboard = (): ReturnDashboardType => {
         pokemonSelected,
         currentPage,
         limit,
-        totalPage
+        totalPage,
+        loading
     }
 }

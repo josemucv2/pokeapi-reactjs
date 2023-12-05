@@ -1,12 +1,8 @@
 import axios, { AxiosResponse } from 'axios';
 import { IPokemon, IUser } from '@/interfaces';
 import DataUSer from './user.json'
-import jwt from 'jsonwebtoken';
 
 const tokenSave = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzdWFyaW8iLCJwYXNzd29yZCI6ImNvbnRyYXNlbmExMjMifQ.UN7ze_klm1b1KKIjxQ5691-HkId9hsHP5sk4x_PmHx4"
-
-
-
 
 export type CustomResponse<T> = AxiosResponse & {
     count: number,
@@ -22,7 +18,7 @@ export const getPokemon = async (limit: number, offset: number): Promise<CustomR
     }
 };
 
-export const getPokemonById = async (url: string): Promise<any> => {
+export const getPokemonById = async (url: string): Promise<void> => {
     try {
         const response = await axios.get(url);
         return response.data;
@@ -33,32 +29,23 @@ export const getPokemonById = async (url: string): Promise<any> => {
 
 
 
-
 export const loginServices = async (body: IUser) => {
-    try {
+  try {
 
-        // const token = jwt.sign({ body }, 'HS256');
-        const user = DataUSer.users.find((userToken) => userToken === token);
+    const user = DataUSer.users.find((user) => user.email === body.email);
 
-        if (!user) {
-            throw new Error('Credenciales inválidas');
-        }
-
-        localStorage.setItem('token', token);
-
-        return token;
-    } catch (error) {
-        throw new Error('Error al obtener datos del usuario');
+    if (!user || user.password !== body.password) {
+      throw new Error('Credenciales inválidas');
     }
-};
 
+    const token = tokenSave;
+    localStorage.setItem('token', token);
 
-export const isAuthenticated = () => {
-    const token = localStorage.getItem('token');
-
-    return !!token; // Devuelve true si el token existe
-};
-
-export const logout = () => {
-    localStorage.removeItem('token');
+    return {
+        token,
+        user,
+    };
+  } catch (error) {
+    throw new Error('Error al obtener datos del usuario');
+  }
 };

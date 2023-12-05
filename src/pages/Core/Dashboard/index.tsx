@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-import { Card, Pagination } from "@/components";
-import { IPokemon } from '@/interfaces'
+import { Card, Pagination, Loading } from "@/components";
+import { IPokemon } from "@/interfaces";
 import { useDashboard } from "./useDashboard";
+import { LoadingBox } from "./dashboard.style";
 
 export const Dashboard: React.FC = (): JSX.Element => {
-
   const {
     fetchData,
     selectedPokemon,
@@ -14,33 +14,38 @@ export const Dashboard: React.FC = (): JSX.Element => {
     pokemonWithImages,
     pokemonSelected,
     currentPage,
-    totalPage
-  } = useDashboard()
-
+    totalPage,
+    loading = true,
+  } = useDashboard();
 
   useEffect(() => {
     fetchData();
   }, [currentPage]);
 
-
   return (
     <>
-      <div className="flex flex-wrap justify-between px-16 pb-16">
-        {pokemonWithImages.map((element: IPokemon, index: number) => (
-          <div onClick={() => selectedPokemon(element)} key={index}>
-            <Card
-              name={element.name}
-              image={element.sprites?.front_default}
-              ability1={
-                element.abilities.length > 0 ? element.abilities[0].name : ""
-              }
-              ability2={
-                element.abilities.length > 1 ? element.abilities[1].name : ""
-              }
-            />
-          </div>
-        ))}
-      </div>
+      {loading ? (
+        <LoadingBox>
+          <Loading />
+        </LoadingBox>
+      ) : (
+        <div className="flex flex-wrap justify-between px-16 pb-16">
+          {pokemonWithImages.map((element: IPokemon, index: number) => (
+            <div onClick={() => selectedPokemon(element)} key={index}>
+              <Card
+                name={element.name}
+                image={element.sprites?.front_default}
+                ability1={
+                  element.abilities.length > 0 ? element.abilities[0].name : ""
+                }
+                ability2={
+                  element.abilities.length > 1 ? element.abilities[1].name : ""
+                }
+              />
+            </div>
+          ))}
+        </div>
+      )}
 
       <div className="w-full flex justify-center">
         <Pagination

@@ -1,5 +1,40 @@
 {
   "users": [
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzdWFyaW8iLCJwYXNzd29yZCI6ImNvbnRyYXNlbmExMjMifQ.UN7ze_klm1b1KKIjxQ5691-HkId9hsHP5sk4x_PmHx4"
+    {
+      "id": 1,
+      "name": "Ash",
+      "lastName": "Ketchum",
+      "email": "ashketchum@gmail.com",
+      "avatar": "https://example.com/ash-avatar.jpg",
+      "pokemonCount": 6,
+      "battlesWon": 53,
+      "battlesLost": 12,
+      "mainPokemon": "Pikachu",
+      "password": "pikachu"
+    },
+    {
+      "id": 2,
+      "name": "Misty",
+      "lastName": "",
+      "email": "mistywaterflower@gmail.com",
+      "avatar": "https://example.com/misty-avatar.jpg",
+      "pokemonCount": 4,
+      "battlesWon": 28,
+      "battlesLost": 7,
+      "mainPokemon": "Starmie",
+      "password": "starmie"
+    },
+    {
+      "id": 3,
+      "name": "Brock",
+      "lastName": "",
+      "email": "brockrock@gmail.com",
+      "avatar": "https://example.com/brock-avatar.jpg",
+      "pokemonCount": 5,
+      "battlesWon": 35,
+      "battlesLost": 15,
+      "mainPokemon": "Onix",
+      "password": "onix"
+    }
   ]
 }

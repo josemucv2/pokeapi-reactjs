@@ -14,17 +14,8 @@ import { Welcome } from "@/pages/Auth/Welcome";
 
 import { Dashboard } from "@/pages/Core/Dashboard";
 import { Profile } from "@/pages/Core/Profile";
-import { toast } from "react-toastify";
 
-const isUserAuthenticated = () => {
-  const localToken = localStorage.getItem("token");
-
-  if (!!localToken) {
-    toast.error("Usuario no autenticado");
-  }
-  return !!localToken;
-};
-
+const isUserAuthenticated = () => !!localStorage.getItem("token");
 const routes: RouteObject[] = createRoutesFromElements(
   <>
     <Route path="/" element={<Auth />}>

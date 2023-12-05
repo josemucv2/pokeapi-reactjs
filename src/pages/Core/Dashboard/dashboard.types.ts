@@ -9,5 +9,6 @@ export type ReturnDashboardType = {
     pokemonSelected: IPokemon | undefined,
     currentPage: number,
     limit: number,
-    totalPage: number
+    totalPage: number,
+    loading: boolean
 }
