@@ -32,7 +32,6 @@ export const getPokemonById = async (url: string): Promise<void> => {
 export const loginServices = async (body: IUser) => {
   const user: IUser | undefined = DataUser.users.find((user) => user.email === body.email);
 
-  console.log('pasa por el servicio, segundo')
 
   if (!user || user.password !== body.password) {
     throw new Error('Credenciales inválidas');

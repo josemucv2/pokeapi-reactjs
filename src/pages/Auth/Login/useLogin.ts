@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
 import { loginServices } from "@/services";
 import { validateEmail, validateRequired, validateSpaceString } from '@/utils/validation'
-import { isUserAuthenticated } from '@/router'
 
 export const useLogin = (): useLoginReturnType => {
 
@@ -61,7 +60,6 @@ export const useLogin = (): useLoginReturnType => {
 
         if (!(emailError || passwordError)) {
             setLoading(true);
-            console.log('PASA PRIMERO UUSE LOGINE')
             try {
                 const result = await loginServices(formData);
 

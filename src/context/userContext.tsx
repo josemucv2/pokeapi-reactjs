@@ -8,9 +8,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        console.log('solo para efectos de ver, seera la primera en ejcutarse', user)
         const storedUser = localStorage.getItem('user');
-        console.log('sexto', storedUser)
 
         if (storedUser) {
             const parsedUser: IUser = JSON.parse(storedUser);

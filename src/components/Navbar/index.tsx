@@ -42,7 +42,6 @@ const Navbar: React.FC = (): JSX.Element => {
       localStorage.removeItem("token")
       localStorage.removeItem("user");
 
-      console.log('al final pasa por aqui septimo', localStorage.getItem('user'), localStorage.getItem('token'))
       goPage("/login");
     } else {
       goPage(path);
