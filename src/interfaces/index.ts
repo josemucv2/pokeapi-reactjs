@@ -1,14 +1,24 @@
 export interface IPokemon {
     name: string;
     url: string;
-    abilities: IHabilities[];
+    abilities: IAbilityInfo[];
     sprites: { front_default: string };
 }
 
-export interface IHabilities {
-    ability: []
-    name: string,
+export interface IAbility {
+    name: string;
 }
+
+export interface IAbilityInfo {
+    ability: IAbility;
+}
+
+export interface IHabilities {
+    abilities: IAbility[];
+    name: string;
+    sprites: { front_default: string };
+}
+
 
 export interface IUser {
     id?: number,

@@ -16,7 +16,7 @@ import { Dashboard } from "@/pages/Core/Dashboard";
 import { Profile } from "@/pages/Core/Profile";
 
 export const isUserAuthenticated = () => {
-  return localStorage.getItem("token")
+  return true
 }
 
 const routes: RouteObject[] = createRoutesFromElements(

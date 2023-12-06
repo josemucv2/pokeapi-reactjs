@@ -1,16 +1,25 @@
 // index.ts
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import userReducer from './user/userReducer';
+import { pokemonListReducers } from './pokemons/reducers';
+import {IPokemon} from '@/interfaces'
+
+import { thunk } from 'redux-thunk';
+
+export interface IRootState {
+  pokemons: {
+    pokemonList: IPokemon[];
+  };
+}
 
 const rootReducer = combineReducers({
-    user: userReducer,
-    // Puedes agregar más reducers aquí si tienes otros módulos
+    pokemons: pokemonListReducers,
 });
 
 export const store = configureStore({
-    reducer: rootReducer,
-    // Otros middlewares, opciones, etc.
+  reducer: rootReducer,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
+
 });
 
-export type RootState = ReturnType<typeof rootReducer>;
+
 export type AppDispatch = typeof store.dispatch;

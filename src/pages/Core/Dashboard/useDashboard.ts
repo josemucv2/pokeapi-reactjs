@@ -1,19 +1,25 @@
 import { useState } from "react";
-import { IPokemon, IHabilities } from "@/interfaces";
+import { IPokemon } from "@/interfaces";
 import { getPokemon, getPokemonById } from "@/services";
 import { ReturnDashboardType } from './dashboard.types'
 import { toast } from 'react-toastify'
+import { useSelector, useDispatch } from "react-redux";
+import { IRootState } from '@/store'
+import { setPokemons } from '@/store/pokemons/actions'
 
 
 
 export const limit = 10
 export const useDashboard = (): ReturnDashboardType => {
 
-    const [pokemonWithImages, setPokemonWithImages] = useState<IPokemon[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [pokemonSelected, setPokemonSelected] = useState<IPokemon>();
     const [totalPage, setTotalPage] = useState<number>(10)
     const [loading, setLoading] = useState<boolean>(false)
+
+    const { pokemonList } = useSelector((state: IRootState) => state.pokemons)
+    const dispatch = useDispatch();
+
 
     const handlePageChange = (page: number) => {
         setCurrentPage(page);
@@ -41,40 +47,43 @@ export const useDashboard = (): ReturnDashboardType => {
     };
 
     const fetchData = async () => {
-        try {
-            setLoading(true)
-            const data = await getPokemon(
-                limit,
-                (currentPage - 1) * limit
-            );
+    try {
+        setLoading(true);
+        const data = await getPokemon(
+            limit,
+            (currentPage - 1) * limit
+        );
 
-            const totalCount = data.count;
-            const totalPageCount = Math.ceil(totalCount / limit);
-            setTotalPage(totalPageCount);
+        const totalCount = data.count;
+        const totalPageCount = Math.ceil(totalCount / limit);
+        setTotalPage(totalPageCount);
 
-            const pokemonDetail = await Promise.all(
-                data.results.map(async (element) => {
+        const pokemonDetail = await Promise.all(
+            data.results.map(async (element) => {
+                try {
                     const pokemonDetail = await getPokemonById(element.url);
-                    const pokemonAbilities: IHabilities[] = pokemonDetail.abilities.map(
-                        (element: IHabilities) => {
-                            return element.ability;
-                        }
-                    );
-
+                    
                     return {
                         name: element.name,
                         sprites: pokemonDetail.sprites,
-                        abilities: pokemonAbilities,
-                    } as IPokemon;
-                })
-            );
+                        abilities: pokemonDetail.abilities,
+                    };
+                } catch (error) {
+                    console.error(`Error obteniendo detalles de ${element.name}: ${error}`);
+                    return null; 
+                }
+            })
+        );
 
-            setPokemonWithImages(pokemonDetail);
-            setLoading(false)
-        } catch (error) {
-            toast.error(`${error}`)
-        }
-    };
+        const validPokemonDetail = pokemonDetail.filter((detail): detail is IPokemon => detail !== null);
+
+        dispatch(setPokemons(validPokemonDetail))
+        setLoading(false);
+    } catch (error) {
+        toast.error(`${error}`);
+    }
+};
+
 
     return {
         fetchData,
@@ -82,7 +91,7 @@ export const useDashboard = (): ReturnDashboardType => {
         backPage,
         nextPage,
         handlePageChange,
-        pokemonWithImages,
+        pokemonList,
         pokemonSelected,
         currentPage,
         limit,

@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import { useNavbar } from "./useNavbar";
 import { useNavigate } from "react-router-dom";
 import PokmonLogo from "@/assets/images/pokemonLogo.png";
-import { useUser } from "@/context/userContext";
+import ashAvata from "@/assets/images/ash.webp";
+// import { useUser } from "@/context/userContext";
 
 const MENU = [
   {
@@ -25,7 +26,7 @@ const MENU = [
 const Navbar: React.FC = (): JSX.Element => {
   const goPage = useNavigate();
 
-  const user = useUser()
+  // const user = useUser()
 
   const { handleClickOutside, setView, view, menuRef, profileRef } =
     useNavbar();
@@ -39,7 +40,7 @@ const Navbar: React.FC = (): JSX.Element => {
 
   const handleMenuClick = (path: string, isLogout: boolean) => {
     if (isLogout) {
-      localStorage.removeItem("token")
+      localStorage.removeItem("token");
       localStorage.removeItem("user");
 
       goPage("/login");
@@ -54,7 +55,7 @@ const Navbar: React.FC = (): JSX.Element => {
 
       <img
         ref={profileRef}
-        src={user.avatar}
+        src={ashAvata}
         alt="logo"
         width={80}
         height={80}
