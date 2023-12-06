@@ -1,14 +1,17 @@
 import { useState, ChangeEvent } from "react";
 import { formDataType, useLoginReturnType } from './login.types'
 import { toast } from "react-toastify";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate  } from 'react-router-dom';
 import { loginServices } from "@/services";
 import { validateEmail, validateRequired, validateSpaceString } from '@/utils/validation'
+import { useDispatch } from 'react-redux';
+import { setToken, setUser } from "@/store/user/userAction";
 
 export const useLogin = (): useLoginReturnType => {
 
     const [loading, setLoading] = useState<boolean>(false)
     const goPage = useNavigate()
+    const dispatch =  useDispatch()
 
     const [formData, setFormData] = useState<formDataType>({
         email: "",
@@ -64,8 +67,9 @@ export const useLogin = (): useLoginReturnType => {
                 const result = await loginServices(formData);
 
 
-                localStorage.setItem('token', result.token);
-                localStorage.setItem('user', JSON.stringify(result.user));
+                 dispatch(setToken(result.token));
+                 dispatch(setUser(result.user));
+
 
                 goPage('/dashboard');
             } catch (err) {

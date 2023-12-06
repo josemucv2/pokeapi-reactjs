@@ -1,25 +1,40 @@
-// index.ts
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { pokemonListReducers } from './pokemons/reducers';
-import {IPokemon} from '@/interfaces'
+import { pokemonReducers } from './pokemons/pokemonReducers';
+import { IPokemon, IUser } from '@/interfaces';
+import { userAuthReducer } from './user/userReducer';
 
-import { thunk } from 'redux-thunk';
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+
 
 export interface IRootState {
   pokemons: {
     pokemonList: IPokemon[];
   };
+  user: {
+    token: string;
+    user: IUser;
+  };
 }
 
+const persistConfig = {
+  key: 'root',
+  storage, 
+  whitelist: ['user'], 
+};
+
 const rootReducer = combineReducers({
-    pokemons: pokemonListReducers,
+  pokemons: pokemonReducers,
+  user: userAuthReducer,
 });
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-  reducer: rootReducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
-
+  reducer: persistedReducer,
 });
 
+export const persistor = persistStore(store);
 
 export type AppDispatch = typeof store.dispatch;
+export default { store, persistor };
