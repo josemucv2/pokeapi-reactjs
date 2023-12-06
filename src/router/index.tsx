@@ -14,17 +14,10 @@ import { Welcome } from "@/pages/Auth/Welcome";
 
 import { Dashboard } from "@/pages/Core/Dashboard";
 import { Profile } from "@/pages/Core/Profile";
-import { toast } from "react-toastify";
 
-const isUserAuthenticated = () => {
-  const sessionToken = sessionStorage.getItem("token");
-  const localToken = localStorage.getItem("token");
-
-  if (!!sessionToken || !!localToken) {
-    toast.error("Usuario no autenticado");
-  }
-  return true;
-};
+export const isUserAuthenticated = () => {
+  return true
+}
 
 const routes: RouteObject[] = createRoutesFromElements(
   <>

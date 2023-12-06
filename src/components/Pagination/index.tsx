@@ -7,7 +7,7 @@ type PaginationPropsType = {
 };
 // ... (resto del código del componente Pagination)
 
-const Pagination = ({
+const Pagination: React.FC<PaginationPropsType> = ({
   totalPages,
   currentPage,
   onPageChange,
@@ -24,14 +24,15 @@ const Pagination = ({
     }
 
     // Calcula la página final para mostrar
-    let endPage = Math.min(startPage + 9, totalPages);
+    const endPage = Math.min(startPage + 9, totalPages);
 
     for (let i = startPage; i <= endPage; i++) {
       buttons.push(
         <input
           key={i}
-          className={`join-item btn btn-square ${currentPage === i ? "checked" : ""
-            }`}
+          className={`join-item btn btn-square ${
+            currentPage === i ? "checked" : ""
+          }`}
           type="radio"
           name="options"
           aria-label={i.toString()}
@@ -58,4 +59,3 @@ const Pagination = ({
 };
 
 export default Pagination;
-

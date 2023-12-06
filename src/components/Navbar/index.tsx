@@ -2,25 +2,31 @@ import { useEffect } from "react";
 import { useNavbar } from "./useNavbar";
 import { useNavigate } from "react-router-dom";
 import PokmonLogo from "@/assets/images/pokemonLogo.png";
-import avatarAsh from '@/assets/images/ash.webp'
+import ashAvata from "@/assets/images/ash.webp";
+// import { useUser } from "@/context/userContext";
 
 const MENU = [
   {
     path: "/dashboard",
     label: "Dashboard",
+    logout: false,
   },
   {
     path: "/dashboard/profile",
     label: "Mi perfil",
+    logout: false,
   },
   {
     path: "/login",
-    label: "Cerrar Sesion",
+    label: "Cerrar Sesión",
+    logout: true,
   },
 ];
 
 const Navbar: React.FC = (): JSX.Element => {
   const goPage = useNavigate();
+
+  // const user = useUser()
 
   const { handleClickOutside, setView, view, menuRef, profileRef } =
     useNavbar();
@@ -32,16 +38,27 @@ const Navbar: React.FC = (): JSX.Element => {
     };
   }, [handleClickOutside]);
 
+  const handleMenuClick = (path: string, isLogout: boolean) => {
+    if (isLogout) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+
+      goPage("/login");
+    } else {
+      goPage(path);
+    }
+  };
+
   return (
     <div className="flex justify-between px-28 items-center pt-5">
       <img src={PokmonLogo} alt="logo" width={180} height={10} />
 
       <img
         ref={profileRef}
-        src={avatarAsh}
+        src={ashAvata}
         alt="logo"
         width={80}
-        height={100}
+        height={80}
         className="cursor-pointer border p-3 rounded-full border-slate-600"
         onClick={() => setView(!view)}
       />
@@ -56,7 +73,7 @@ const Navbar: React.FC = (): JSX.Element => {
               <div
                 key={index}
                 className="text-black text-xl hover:underline hover:text-blue-800 cursor-pointer"
-                onClick={() => goPage(element.path)}
+                onClick={() => handleMenuClick(element.path, element.logout)}
               >
                 {element.label}
               </div>
