@@ -11,7 +11,7 @@ export const Dashboard: React.FC = (): JSX.Element => {
     backPage,
     nextPage,
     handlePageChange,
-    pokemonWithImages,
+    pokemonList,
     pokemonSelected,
     currentPage,
     totalPage,
@@ -30,16 +30,20 @@ export const Dashboard: React.FC = (): JSX.Element => {
         </LoadingBox>
       ) : (
         <div className="flex flex-wrap justify-between px-16 pb-16">
-          {pokemonWithImages.map((element: IPokemon, index: number) => (
+          {pokemonList.map((element: IPokemon, index: number) => (
             <div onClick={() => selectedPokemon(element)} key={index}>
               <Card
                 name={element.name}
                 image={element.sprites?.front_default}
                 ability1={
-                  element.abilities.length > 0 ? element.abilities[0].name : ""
+                  element.abilities.length > 0
+                    ? element.abilities[0].ability.name
+                    : ""
                 }
                 ability2={
-                  element.abilities.length > 1 ? element.abilities[1].name : ""
+                  element.abilities.length > 1
+                    ? element.abilities[1].ability.name
+                    : ""
                 }
               />
             </div>
@@ -71,12 +75,12 @@ export const Dashboard: React.FC = (): JSX.Element => {
                 image={pokemonSelected.sprites?.front_default}
                 ability1={
                   pokemonSelected.abilities.length > 0
-                    ? pokemonSelected.abilities[0].name
+                    ? pokemonSelected.abilities[0].ability.name
                     : ""
                 }
                 ability2={
                   pokemonSelected.abilities.length > 1
-                    ? pokemonSelected.abilities[1].name
+                    ? pokemonSelected.abilities[1].ability.name
                     : ""
                 }
               />
