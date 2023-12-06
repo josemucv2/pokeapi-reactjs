@@ -2,9 +2,8 @@ import { useEffect } from "react";
 import { useNavbar } from "./useNavbar";
 import { useNavigate } from "react-router-dom";
 import PokmonLogo from "@/assets/images/pokemonLogo.png";
-import ashAvata from "@/assets/images/ash.webp";
-// import { useUser } from "@/context/userContext";
-
+import { useSelector } from "react-redux";
+import { IRootState } from "../../store/index";
 const MENU = [
   {
     path: "/dashboard",
@@ -26,7 +25,7 @@ const MENU = [
 const Navbar: React.FC = (): JSX.Element => {
   const goPage = useNavigate();
 
-  // const user = useUser()
+  const user = useSelector((state: IRootState) => state.user.user);
 
   const { handleClickOutside, setView, view, menuRef, profileRef } =
     useNavbar();
@@ -55,7 +54,7 @@ const Navbar: React.FC = (): JSX.Element => {
 
       <img
         ref={profileRef}
-        src={ashAvata}
+        src={user.avatar}
         alt="logo"
         width={80}
         height={80}
