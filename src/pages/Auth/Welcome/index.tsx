@@ -11,9 +11,12 @@ export const Welcome: React.FC = (): JSX.Element => {
       <ul className="list-disc m-14">
         <li className="title-general">React.JS</li>
         <li className="title-general">TypeScript</li>
+        <li className="title-general">Redux</li>
+        <li className="title-general">Redux Toolkit</li>
         <li className="title-general">Vite.js</li>
         <li className="title-general">Tailwind CSS</li>
         <li className="title-general">DaisyUI</li>
+        <li className="title-general">Styled Components</li>
         <li className="title-general">Axios</li>
       </ul>
       <div

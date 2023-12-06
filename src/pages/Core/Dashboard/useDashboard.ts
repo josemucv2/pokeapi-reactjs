@@ -5,7 +5,7 @@ import { ReturnDashboardType } from './dashboard.types'
 import { toast } from 'react-toastify'
 import { useSelector, useDispatch } from "react-redux";
 import { IRootState } from '@/store'
-import { setPokemons } from '@/store/pokemons/actions'
+import { setPokemons } from '@/store/pokemons/pokemonActions'
 
 
 
