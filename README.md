@@ -59,10 +59,11 @@ En la página hay un enlace que dice "¡Haz Click para Iniciar!" que redirige al
 - mistywaterflower@gmail.com / starmie
 - brockrock@gmail.com / onix
 
-Nota: tambien puede ver los datos de los entrenadores pokemons dentro de la carpeta services/user.json
+Nota: tambien puede ver los datos de los entrenadores pokemon dentro de la carpeta services/user.json
 
 ## Muchas gracias
 
 Para consultas o dudas adicionales, no dude en ponerse en contacto conmigo:
 
 LinkedIn: [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/josemartinez-developer/)
+Correo: martinezcaceresjosem@gmail.com
