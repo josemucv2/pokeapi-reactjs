@@ -12,8 +12,8 @@ const Card: React.FC<CardPropsType> = ({
   ability1,
 }: CardPropsType): JSX.Element => {
   return (
-    <div className="w-[250px] bg-white h-[300px] rounded-2xl class flex flex-col m-10">
-      <img src={image} className="h-1/2 w-full" />
+    <div className=" bg-white rounded-2xl class flex flex-col m-10">
+      <img src={image} className="h-1/2 w-[250px] " />
       <div className="flex flex-col justify-between h-full p-8">
         <p className="text-black title-general">{name}</p>
         <div className="flex space-x-5">
