@@ -1,12 +1,11 @@
 import styled from 'styled-components'
-
-export const ContainerBox = styled.div`
-    width: 475px;
-    height: 743px;
-    background-color: white;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-    position: absolute;
-    left: 180px;
-    top: 100px;
-    border-radius: 10px;
-`
+import bgPikachu from '@/assets/images/bg_login.png'
+export const AuthLayout = styled.div`
+    background-image: url(${bgPikachu});
+    height: 100vh;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-attachment: fixed;
+}
+`;

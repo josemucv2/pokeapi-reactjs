@@ -50,7 +50,6 @@ export const Dashboard: React.FC = (): JSX.Element => {
           ))}
         </div>
       )}
-
       <div className="w-full flex justify-center">
         <Pagination
           totalPages={totalPage}
