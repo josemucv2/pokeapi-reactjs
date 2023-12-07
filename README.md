@@ -2,6 +2,7 @@
 
 ![Logo Pokemon](/src/assets//images/pokemonLogo.png)
 
+
 ## Introducción
 
 Gracias por la oportunidad de presentar la prueba técnica para desarrollador frontend.
